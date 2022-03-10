@@ -330,3 +330,55 @@ INSERT INTO Trained_In VALUES(7,7,'2008-01-01','2008-12-31');
 -- 8.1 Obtain the names of all physicians that have performed a medical procedure they have never been certified to perform.
 Select Name
 From Physician
+Where EmployeeID in (
+	Select Physician
+	From Undergoes U
+	Where Not Exists (
+		Select *
+		From Trained_In
+		Where Treatment = Procedures
+		And Physician = U.Physician
+		)
+	)
+
+-- 8.2 Same as the previous query, but include the following information in the results: Physician name, name of procedure, date when the procedure was carried out, name of the patient the procedure was carried out on.
+Select P.Name As "Physician", Pr.Name As "Procedure", U.DateUndergoes, Pt.Name As "Patient"
+From Physician P, Procedures Pr, Undergoes U, Patient Pt
+Where U.Patient = Pt.SSN
+And U.Procedures = Pr.Code
+And U.Physician = P.EmployeeID
+And Not Exists (
+	Select *
+	From Trained_In T
+	Where T.Treatment = U.Procedures
+	And T.Physician = U.Physician
+	)
+
+
+-- 8.3 Obtain the names of all physicians that have performed a medical procedure that they are certified to perform, but such that the procedure was done at a date (Undergoes.Date) after the physician's certification expired (Trained_In.CertificationExpires).
+Select Name
+From Physician
+Where EmployeeID In (
+	Select Physician
+	From Undergoes U
+	Where DateUndergoes > (
+		Select CertificationExpires
+		From Trained_In T
+		Where T.Physician = U.Physician
+		And T.Treatment = U.Procedures
+		)
+	)
+
+
+-- 8.4 Same as the previous query, but include the following information in the results: Physician name, name of procedure, date when the procedure was carried out, name of the patient the procedure was carried out on, and date when the certification expired.
+Select P.Name As Physician, Pr.Name As Procedures, U.DateUndergoes, Pt.Name As Patient, T.CertificationExpires
+From Physician P, Undergoes U, Patient Pt, Procedures Pr, Trained_In T
+Where U.Patient = Pt.SSN
+And U.Procedures = Pr.Code
+And U.Physician = P.EmployeeID
+And Pr.Code = T.Treatment
+And P.EmployeeID = T.Physician
+And U.DateUndergoes > T.CertificationExpires
+
+
+-- 8.5 Obtain the information for appointments where a patient met with a physician other than his/her primary care physician. Show the following information: Patient name, physician name, nurse name (if any), start and end time of appointment, examination room, and the name of the patient's primary care physician.
