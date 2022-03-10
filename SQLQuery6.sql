@@ -78,9 +78,9 @@ INSERT INTO Scientists(SSN,Name)
     -- in alphabetical order of project name, then scientist name.
 Select Scientists.Name, Projects.Name, Projects.Hours
 From Scientists
-Inner Join Projects On Project = Code
 Inner Join AssignedTo On SSN = Scientist
-Group by Scientists.Name ASC, Scientists.Name ASC
+Inner Join Projects On Project = Code
+Group by Projects.Name ASC, Scientists.Name ASC
  
 
 -- 6.2 Select the project names which are not assigned yet

@@ -108,9 +108,17 @@ INSERT INTO Package VALUES(5, 1, 'Undeclared', 100.0, 5, 1);
 
 -- 7.1 Who receieved a 1.5kg package?
     -- The result is "Al Gore's Head".
-
+Select Client.Name
+From Client Join Package On Client.AccountNumber = Package.Recipient
+Where Package.Weight = 1.5
 
 
 -- 7.2 What is the total weight of all the packages that he sent?
-
+Select Sum(Weight)
+From Package
+Where Sender = (
+	Select Recipient
+	From Package
+	Where Weight = 1.5
+	)
 
