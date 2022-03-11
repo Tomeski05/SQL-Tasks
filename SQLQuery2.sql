@@ -102,10 +102,7 @@ Select *
 From Employees, Departments
 
 -- 2.11 Select the name and last name of each employee, along with the name and budget of the employee's department.
-Select Employees.Name, 
-	LastName, 
-	Departments.Name 
-	As Name, Budget
+Select Employees.Name, LastName, Departments.Name As Name, Budget
 From Employees 
 Join Departments
 On Employees.Department = Departments.Code
@@ -133,17 +130,17 @@ Group by Departments.Name
 Having Count (*) > 2
 
 --2.15 Very Important - Select the name and last name of employees working for departments with second lowest budget.
-SELECT Name, LastName 
-FROM Employees 
-WHERE Department IN (
-  SELECT Code 
-  FROM Departments  
-    WHERE Budget IN (
-      SELECT DISTINCT TOP 2 Budget 
-      FROM Departments 
-     ORDER BY Budget ASC
+Select Name, LastName 
+From Employees 
+Where Department IN (
+  Select Code 
+  From Departments  
+    Where Budget IN (
+      Select Distinct Top 2 Budget 
+      From Departments 
+     Order by Budget ASC
     ) 
-    ORDER BY Budget DESC
+    Order by Budget DESC
   )
 
 -- 2.16  Add a new department called "Quality Assurance", with a budget of $40,000 and departmental code 11. 
@@ -163,7 +160,9 @@ Set department = 14
 Where department = 77
 
 -- 2.19 Delete from the table all employees in the IT department (code 14).
-Delete From Employees Where department = 14
+Delete
+From Employees
+Where department = 14
 
 -- 2.20 Delete from the table all employees who work in departments with a budget greater than or equal to $60,000.
 Delete From Employees

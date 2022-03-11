@@ -102,7 +102,8 @@ Order by Price Desc -- Name Asc
 Select * from Products, Manufacturers
 
 -- 1.11 Select the product name, price, and manufacturer name of all the products.
-Select Name, Price, Manufacturer from Products
+Select Name, Price, Manufacturer 
+From Products
 Order by Name Asc
 
 -- 1.12 Select the average price of each manufacturer's products, showing only the manufacturer's code.
@@ -118,7 +119,8 @@ From Products, Manufacturers
 --Where Manufacturers = 'Name'
 
 -- 1.14 Select the names of manufacturer whose products have an average price larger than or equal to $150.
-Select Name from Products
+Select Name 
+From Products
 Where Price >= 150
 Order by Name
 

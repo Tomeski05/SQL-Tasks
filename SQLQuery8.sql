@@ -383,12 +383,12 @@ And U.DateUndergoes > T.CertificationExpires
 
 -- 8.5 Obtain the information for appointments where a patient met with a physician other than his/her primary care physician. Show the following information: Patient name, physician name, nurse name (if any), start and end time of appointment, examination room, and the name of the patient's primary care physician.
 
-Select Pt.Name AS Patient, Ph.Name AS Physician, N.Name AS Nurse, A.Start, A.[End], A.ExaminationRoom, PhPCP.Name AS PCP
-From Patient Pt Join Appoitment A --Left Join Nurse N On A.PrepNurse = N.EmployeeID
-Where A.Patient = Pt.SSN
-And A.Physician = Ph.EmployeeID
-And Pt.PCP = PhPCP.EmployeeID
-And A.Physician <> Pt.PCP
+--Select Pt.Name AS Patient, Ph.Name AS Physician, N.Name AS Nurse, A.Start, A.[End], A.ExaminationRoom, PhPCP.Name AS PCP
+--From Patient Pt Join Appoitment A --Left Join Nurse N On A.PrepNurse = N.EmployeeID
+--Where A.Patient = Pt.SSN
+--And A.Physician = Ph.EmployeeID
+--And Pt.PCP = PhPCP.EmployeeID
+--And A.Physician <> Pt.PCP
 
 Select Pt.Name As "Patient", P.Name As "Physician"
 From Patient Pt
