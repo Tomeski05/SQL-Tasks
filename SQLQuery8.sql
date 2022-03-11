@@ -457,7 +457,13 @@ And Exists (
 	And U.Patient = Pt.SSN
 	And Pr.Cost > 5000
 	)
-And 2<= (
+And 2 <= (
 	Select Count(A.AppointmentID)
-	From Appointment a, Nurse N
-
+	From Appointment A, Nurse N
+	Where A.PrepNurse = N.EmployeeID
+	And N.Registered = 1
+	)
+And Not Pt.PCP In (
+	Select Head 
+	From Department
+	)
