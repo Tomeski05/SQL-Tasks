@@ -1,5 +1,3 @@
-
-
 -- 4.1 Select the title of all movies.
 -- 4.2 Show all the distinct ratings in the database.
 -- 4.3  Show all unrated movies.
