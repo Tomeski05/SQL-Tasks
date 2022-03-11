@@ -382,3 +382,45 @@ And U.DateUndergoes > T.CertificationExpires
 
 
 -- 8.5 Obtain the information for appointments where a patient met with a physician other than his/her primary care physician. Show the following information: Patient name, physician name, nurse name (if any), start and end time of appointment, examination room, and the name of the patient's primary care physician.
+
+Select Pt.Name AS Patient, Ph.Name AS Physician, N.Name AS Nurse, A.Start, A.[End], A.ExaminationRoom, PhPCP.Name AS PCP
+From Patient Pt Join Appoitment A --Left Join Nurse N On A.PrepNurse = N.EmployeeID
+Where A.Patient = Pt.SSN
+And A.Physician = Ph.EmployeeID
+And Pt.PCP = PhPCP.EmployeeID
+And A.Physician <> Pt.PCP
+
+Select Pt.Name As "Patient", P.Name As "Physician"
+From Patient Pt
+Join Prescribes Pr On Pr.Patient = Pt.SSN
+Join Physician P On Pt.PCP = P.EmployeeID
+Where Pt.PCP = Pr.Physician
+And Pt.PCP = P.EmployeeID
+
+
+-- 8.6 The Patient field in Undergoes is redundant, since we can obtain it from the Stay table. There are no constraints in force to prevent inconsistencies between these two tables.
+-- More specifically, the Undergoes table may include a row where the patient ID does not match the one we would obtain from the Stay table through the Undergoes.Stay foreign key.
+-- Select all rows from Undergoes that exhibit this inconsistency.
+Select *
+From Undergoes U
+Where Patient <> (
+	Select Patient 
+	From Stay S
+	Where U.Stay = S.StayID
+	)
+
+
+-- 8.7 Obtain the names of all the nurses who have ever been on call for room 123.
+Select Name
+From Nurse N
+Where EmployeeID In (
+	Select Oc.Nurse 
+	From On_Call Oc, Room R
+	Where Oc.BlockFloor   = R.BlockFloor
+	And Oc.BlockCode = R.BlockCode
+	And R.RoomNumber = 123
+	)
+
+
+-- 8.8 The hospital has several examination rooms where appointments take place. Obtain the number of appointments that have taken place in each examination room.
+Select 
