@@ -52,3 +52,15 @@ From CranLogs
 Where country In ( 'CN', 'JP', 'SG' )
 
 -- 9.8 Print the countries whose downloaded are more than the downloads from China ("CN")
+Select C.country
+From (
+	Select country, Count(*) As Downloads
+	From CranLogs
+	Group by country
+	) As C
+Where 
+	C.Downloads > (
+		Select Count(*)
+		From CranLogs
+		Where country = 'CN'
+		)
