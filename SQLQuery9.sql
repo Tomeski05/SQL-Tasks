@@ -37,3 +37,18 @@ Group by package
 Order by 2 Desc
 
 -- 9.6 Give the package ranking (based on how many times it was downloaded) during 9AM to 11AM
+Select C.package, Count(*) As Ranking
+From ( 
+	Select *
+	From CranLogs
+	Where time Between '9:00' And '11:00'
+	)
+	As C 
+	Group by C.package
+
+-- 9.7 How many recordings are from China ("CN") or Japan("JP") or Singapore ("SG")?
+Select Count(*)
+From CranLogs
+Where country In ( 'CN', 'JP', 'SG' )
+
+-- 9.8 Print the countries whose downloaded are more than the downloads from China ("CN")
