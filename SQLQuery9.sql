@@ -12,5 +12,28 @@
 -- 9.12 The field "r_os" is the operating system of the users.
     -- 	Here we would like to know what main system we have (ignore version number), the relevant counts, and the proportion (in percentage).
 
+-- 9.1 give the total number of recordings in this table
+Select Count (*)
+From CranLogs
 
-	
+-- 9.2 the number of packages listed in this table?
+Select Count(Distinct package)
+From CranLogs
+
+-- 9.3 How many times the package "Rcpp" was downloaded?
+Select Count(*)
+From CranLogs
+Where package = 'RCPP'
+
+-- 9.4 How many recordings are from China ("CN")?
+Select Count(*)
+From CranLogs
+Where country = 'CN'
+
+-- 9.5 Give the package name and how many times they're downloaded. Order by the 2nd column descently.
+select package, Count(*) As "Total"
+From CranLogs
+Group by package
+Order by 2 Desc
+
+-- 9.6 Give the package ranking (based on how many times it was downloaded) during 9AM to 11AM
