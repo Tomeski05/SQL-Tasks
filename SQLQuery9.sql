@@ -64,3 +64,24 @@ Where
 		From CranLogs
 		Where country = 'CN'
 		)
+
+-- 9.9 Print the average length of the package name of all the UNIQUE packages
+Select AVG(length (package)
+From (
+	Select Distinct package As Package
+	From CranLogs
+	)
+
+
+-- 9.10 Get the package whose downloading count ranks 2nd (print package name and it's download count).
+Select package
+From (
+	Select package , Count (*) b
+	From CranLogs
+	Group by package
+	Order by b Desc
+	Limit 2
+	)
+Order by b Asc
+
+-- 9.11 Print the name of the package whose download count is bigger than 1000.
