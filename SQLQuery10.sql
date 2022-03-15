@@ -36,7 +36,7 @@ INSERT INTO ADDRESS VALUES(4, 'address-4-4', '2014-01-01');
 
 Select People.id, People.name
 From People Left Join ( 
-					Select id, address
+					Select id, (Max)address
 					From ADDRESS
 					Group by id
 					)
