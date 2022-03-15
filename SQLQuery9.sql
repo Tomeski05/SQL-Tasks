@@ -85,3 +85,12 @@ From (
 Order by b Asc
 
 -- 9.11 Print the name of the package whose download count is bigger than 1000.
+Select package
+From CranLogs
+Group by package
+Having Count (*) > 1000
+
+-- 9.12 The field "r_os" is the operating system of the users.
+    -- 	Here we would like to know what main system we have (ignore version number), the relevant counts, and the proportion (in percentage).
+
+
