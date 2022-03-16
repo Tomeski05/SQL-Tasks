@@ -34,22 +34,24 @@ INSERT INTO ADDRESS VALUES(4, 'address-4-4', '2014-01-01');
 -- 10.1 Join table PEOPLE and ADDRESS, but keep only one address information for each person (we don't mind which record we take for each person). 
     -- i.e., the joined table should have the same number of rows as table PEOPLE
 
-Select People.id, People.name
+Select People.id, People.name, Temp.address
 From People Left Join ( 
-					Select id, (Max)address
+					Select id, Max(address) As Address
 					From ADDRESS
 					Group by id
 					)
-					As Profile
+					As Temp
+					On People.id = Temp.id
 
 
 -- 10.2 Join table PEOPLE and ADDRESS, but ONLY keep the LATEST address information for each person. 
     -- i.e., the joined table should have the same number of rows as table PEOPLE
 
-Select PEOPLE.id, PEOPLE.name
+Select PEOPLE.id, PEOPLE.name, Temp.address
 From PEOPLE Left Join (
-					Select id, address
+					Select id, address, Max(updatedate) As Date
 					From ADDRESS
 					Group by id
 					)
-					As People
+					As Temp
+					On People.id = Temp.id
