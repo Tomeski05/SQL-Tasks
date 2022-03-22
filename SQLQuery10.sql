@@ -51,7 +51,7 @@ Select PEOPLE.id, PEOPLE.name, Temp.address
 From PEOPLE Left Join (
 					Select id, address, Max(updatedate) As Date
 					From ADDRESS
-					Group by id
+					--Group by id
 					)
 					As Temp
 					On People.id = Temp.id
